@@ -58,7 +58,7 @@ void run(std::string filename){
 int main(int argc, char ** argv ){
     using namespace elijahrou;
     if (argc != 1){
-        std::cout << "Welcome to the IR-Python3 cross-compiler!" << std::endl;
+        std::cout << "Welcome to the IR-Python3 cross-compiler!" << std::endl << std::endl;
         try{
             // Create trees for pattern recognition
             std::cout << "Generating loop patterns..." << std::endl;
