@@ -1,4 +1,5 @@
 #include "irtree.h"
+#include "munch.h"
 
 /*
     Create an IR Tree using a stack
@@ -51,37 +52,77 @@ elijahrou::IRTree * genIR(std::string str){
 }
 
 
-
 int main(int argc, char ** argv ){
+    using namespace elijahrou;
     if (argc != 1){
+        /*
         // Create trees for pattern recognition
-        elijahrou::IRTree * loopIRTemp = genIR(loopTreeTemp);
-        elijahrou::IRTree * loopIRConst = genIR(loopTreeConst);
-        elijahrou::IRTree * loopIRName = genIR(loopTreeName);
-        elijahrou::IRTree * loopIRCall = genIR(loopTreeCall);
+        IRTree * loopIRTemp = genIR(loopTreeTemp);
+        IRTree * loopIRConst = genIR(loopTreeConst);
+        IRTree * loopIRName = genIR(loopTreeName);
+        IRTree * loopIRCall = genIR(loopTreeCall);
 
         // Push patterns to a vector
-        std::vector<elijahrou::IRTree *> patternTrees;
+        std::vector<IRTree *> patternTrees;
         patternTrees.push_back(loopIRTemp);
         patternTrees.push_back(loopIRConst);
         patternTrees.push_back(loopIRName);
         patternTrees.push_back(loopIRCall);
 
         // Create IR from file and optimise
+        //std::string inputFile(argv[1]);
+        //IRTree * irt = readIR(inputFile);
+        //irt->optimise(patternTrees);
+        //irt->output();
+        */
+
+        // Create tiles for python compilation
+        std::map<std::string, IRTree *> tiles;
+        /*
+            CALLS
+        */
+        // Input call
+        tiles.insert(std::pair<std::string, IRTree *>("call_input", readIR("tiles/call_input.ir")));
+        // Input right subtree store call
+        tiles.insert(std::pair<std::string, IRTree *>("call_store_input_right", readIR("tiles/call_store_input_right.ir")));
+        // Input left subtree store call
+        tiles.insert(std::pair<std::string, IRTree *>("call_store_input_left", readIR("tiles/call_store_input_left.ir")));
+        // Print call
+        tiles.insert(std::pair<std::string, IRTree *>("call_print", readIR("tiles/call_print.ir")));
+
+        /*
+            STORES
+        */
+        // Store with no +
+        tiles.insert(std::pair<std::string, IRTree *>("store_e", readIR("tiles/store_e.ir")));
+        // Store right subtree
+        tiles.insert(std::pair<std::string, IRTree *>("store_right", readIR("tiles/store_right.ir")));
+        // Store left subtree
+        tiles.insert(std::pair<std::string, IRTree *>("store_left", readIR("tiles/store_left.ir")));
+
+        /*
+            LOADS
+        */
+        tiles.insert(std::pair<std::string, IRTree *>("store_e", readIR("tiles/store_e.ir")));
+        tiles.insert(std::pair<std::string, IRTree *>("store_e", readIR("tiles/store_e.ir")));
+
+        /*
+            Fetch input IR
+        */
         std::string inputFile(argv[1]);
-        elijahrou::IRTree * irt = readIR(inputFile);
-        irt->optimise(patternTrees);
-        irt->output();
-
-        // Create tiles for python
+        IRTree * irt = readIR(inputFile);
         
+        //IRTree * test = readIR("testdata/input&print.ir");
+        //test->output();
+        //std::string pyCode = munch(test, tiles);
 
-
-
+        std::cout << munch(irt, tiles) << std::endl;
+        /*
         delete irt;
         for(elijahrou::IRTree * tree : patternTrees){
             delete tree;
         }
+        */
     }
     else{
         std::cout << "Invalid amount of arguments.";

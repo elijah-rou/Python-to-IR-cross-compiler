@@ -15,12 +15,9 @@ namespace elijahrou{
     + Reads an itermediate representation and creates an IR tree 
 */
     
-    class IRTree{
+    struct IRTree{
 
-        private:
         std::string node;
-
-        public:
         std::vector<IRTree *> children;
         int level;
         bool optimised;
@@ -88,11 +85,15 @@ namespace elijahrou{
             return !(*this == irt);
         }
 
-        // Check for equality but exclude leaves
+        // Check for equality but exclude leaves and expressions/statements
         bool innerEqual(const IRTree & irt){
             int size = this->children.size();
             std::string currentNode = this->node;
-            if(currentNode == irt.node){
+            std::string otherNode = irt.node;
+            if(currentNode == "e" || otherNode == "e"){
+                return true;
+            }
+            if(currentNode == otherNode){
                 if(currentNode == "CONST" || currentNode == "LABEL" || currentNode == "NAME" || currentNode == "TEMP" || currentNode == "CJUMP" || currentNode == "CALL"){
                     return true;
                 }
