@@ -121,9 +121,9 @@ namespace elijahrou{
         else if(current->node == "*"){
             return munch(current->children.at(0), tiles) + "*" + munch(current->children.at(1), tiles);
         }
-        else if(current->node == "CONST"){
-            return current->children.at(0)->node;
-        }
+
+        // Return the node if nothing else
+        return current->children.at(0)->node;
     }
 
     

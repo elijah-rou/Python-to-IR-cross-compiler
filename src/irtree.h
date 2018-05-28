@@ -14,7 +14,7 @@ namespace elijahrou{
 
     + Reads an itermediate representation and creates an IR tree 
 */
-    
+    typedef unsigned int uint; 
     struct IRTree{
 
         std::string node;
@@ -64,7 +64,7 @@ namespace elijahrou{
                 if(size == 0){
                     return true;
                 }
-                if(size == irt.children.size()){
+                if((uint)size == irt.children.size()){
                     bool res = true;
                     for(int i=0; i<size; i++){
                         res &= *this->children.at(i) == *irt.children.at(i); 
@@ -97,7 +97,7 @@ namespace elijahrou{
                 if(currentNode == "CONST" || currentNode == "LABEL" || currentNode == "NAME" || currentNode == "TEMP" || currentNode == "CJUMP" || currentNode == "CALL"){
                     return true;
                 }
-                if(size == irt.children.size()){
+                if((uint)size == irt.children.size()){
                     bool res = true;
                     for(int i=0; i<size; i++){
                         res &= this->children.at(i)->innerEqual(*irt.children.at(i)); 

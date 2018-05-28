@@ -9,8 +9,8 @@ OUT = main
 
 default: $(OBJ_FILES)
 # create main
+	@make clean
 	$(CC) $(SRC_FILES) $(LD_FLAGS) $(OUT) $(FLAGS) 
-	@make cleanobj
 
 obj/%.o : src/%.cpp	
 	$(CC) $(CC_FLAGS) $@ $^ --std=c++11
