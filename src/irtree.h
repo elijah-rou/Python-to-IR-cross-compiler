@@ -87,19 +87,19 @@ namespace elijahrou{
 
         // Check for equality but exclude leaves and expressions/statements
         bool innerEqual(const IRTree & irt){
-            int size = this->children.size();
+            uint size = this->children.size();
             std::string currentNode = this->node;
             std::string otherNode = irt.node;
             if(currentNode == "e" || otherNode == "e"){
                 return true;
             }
             if(currentNode == otherNode){
-                if(currentNode == "CONST" || currentNode == "LABEL" || currentNode == "NAME" || currentNode == "TEMP" || currentNode == "CJUMP" || currentNode == "CALL"){
+                if(currentNode == "CONST" || currentNode == "LABEL" || currentNode == "NAME" || currentNode == "TEMP" || currentNode == "CJUMP" || currentNode == "CALL" || currentNode == "JUMP"){
                     return true;
                 }
-                if((uint)size == irt.children.size()){
+                if(size == irt.children.size()){
                     bool res = true;
-                    for(int i=0; i<size; i++){
+                    for(uint i=0; i<size; i++){
                         res &= this->children.at(i)->innerEqual(*irt.children.at(i)); 
                     }
                     return res;

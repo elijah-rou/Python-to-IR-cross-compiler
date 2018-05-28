@@ -128,6 +128,7 @@ int main(int argc, char ** argv ){
             /*
                 Optmise?
             */
+            /*
             std::cout << "Would you like to optimise the IR? [(y)es/(n)o, default n]" << std::endl;
             std::cin >> prompt;
             if(prompt[0] == 'y'){
@@ -136,7 +137,8 @@ int main(int argc, char ** argv ){
             }
             prompt = "";
             std::cout << std::endl;
-
+            */
+            
             // Cross compile
             std::string pyCode = munch(irt, tiles);
 
@@ -163,6 +165,21 @@ int main(int argc, char ** argv ){
                 std::cout << "Running " << filename << std::endl;
                 run(filename);
             }
+            
+
+            /////
+            // TEST
+            /////
+            /*
+            IRTree * test = readIR("tiles/if_else.ir");
+            test->output();
+            irt->output();
+            std::cout << irt->innerEqual(*test) << std::endl;
+            */
+            /////
+            // TEST
+            /////
+
             /*
                 Clean-Up
             */
