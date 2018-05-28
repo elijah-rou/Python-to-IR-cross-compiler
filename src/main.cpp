@@ -55,8 +55,10 @@ elijahrou::IRTree * genIR(std::string str){
 int main(int argc, char ** argv ){
     using namespace elijahrou;
     if (argc != 1){
+        std::cout << "Welcome to the IR-Python3 cross-compiler!" << std::endl;
         /*
         // Create trees for pattern recognition
+        std::cout << "Generating loop patterns..." << std::endl;
         IRTree * loopIRTemp = genIR(loopTreeTemp);
         IRTree * loopIRConst = genIR(loopTreeConst);
         IRTree * loopIRName = genIR(loopTreeName);
@@ -69,14 +71,10 @@ int main(int argc, char ** argv ){
         patternTrees.push_back(loopIRName);
         patternTrees.push_back(loopIRCall);
 
-        // Create IR from file and optimise
-        //std::string inputFile(argv[1]);
-        //IRTree * irt = readIR(inputFile);
-        //irt->optimise(patternTrees);
-        //irt->output();
         */
 
         // Create tiles for python compilation
+        std::cout<< "Creating tiles..." << std::endl;
         std::map<std::string, IRTree *> tiles;
         /*
             CALLS
@@ -109,17 +107,14 @@ int main(int argc, char ** argv ){
         /*
             Fetch input IR
         */
+        std::cout << "Reading IR file into tree..." << std::endl;
         std::string inputFile(argv[1]);
         IRTree * irt = readIR(inputFile);
+        //irt->optimise(patternTrees);
         irt->output();
-        std::cout << std::endl;
-        // 
-        //IRTree * test = readIR("testdata/input&print.ir");
-        //test->output();
-        //std::string pyCode = munch(test, tiles);
-        //std::cout << pyCode << std::endl;
-
-        std::cout << munch(irt, tiles) << std::endl;
+        std::string pyCode = munch(irt, tiles);
+        std::cout << pyCode + "\n" << std::endl;
+        std::cout << "Would you like to run the Python3 code?" << std::endl;
         /*
         delete irt;
         for(elijahrou::IRTree * tree : patternTrees){
@@ -128,7 +123,7 @@ int main(int argc, char ** argv ){
         */
     }
     else{
-        std::cout << "Invalid amount of arguments.";
+        std::cout << "IR-Python3 CC: Invalid amount of arguments.";
     }
 
 }
