@@ -78,6 +78,18 @@ int main(int argc, char ** argv ){
             std::cout<< "Creating tiles..." << std::endl;
             std::map<std::string, IRTree *> tiles;
             /*
+                LOOPS
+            */
+            // For loop
+            tiles.insert(std::pair<std::string, IRTree *>("loop_for", readIR("tiles/loop_for.ir")));
+            // While loop
+            tiles.insert(std::pair<std::string, IRTree *>("loop_while", readIR("tiles/loop_while.ir")));
+            /*
+                IF
+            */
+            //tiles.insert(std::pair<std::string, IRTree *>("if_then", readIR("tiles/if_then.ir")));
+            tiles.insert(std::pair<std::string, IRTree *>("if_else", readIR("tiles/if_else.ir")));
+            /*
                 CALLS
             */
             // Input call

@@ -4,6 +4,49 @@
 namespace elijahrou{
     // Declare munch
     std::string munch(IRTree *, const std::map<std::string, IRTree *>);
+
+    /*
+        Loops
+    */
+    std::string loop_for(IRTree * current, const std::map<std::string, IRTree *> tiles){
+        // Increment is 2 seq's down and all the way to the right
+        std::string increment = current->children.at(0)->children.at(0)->children.at(1)->children.at(1)->children.at(1)->children.at(0)->node;
+
+        // Loop body is 3 seq's down and to the right
+        IRTree * body = current->children.at(0)->children.at(0)->children.at(0)->children.at(1);
+
+        // Pointer to the last seq node
+        IRTree * lastSeq = current->children.at(0)->children.at(0)->children.at(0)->children.at(0)->children.at(0)->children.at(0)->children.at(0)->children.at(0)->children.at(0)->children.at(0);
+
+        // Bound variable name is all the way to the left of lastSeq
+        std::string boundVar = lastSeq->children.at(0)->children.at(0)->children.at(0)->node;
+
+        // Lower Bound val is left subtree and all the way to the right
+        std::string lowerBound = lastSeq->children.at(0)->children.at(1)->children.at(0)->node; 
+
+        // Upper Bound val is right subtree and all the way to the right
+        std::string upperBound = lastSeq->children.at(1)->children.at(1)->children.at(0)->node;
+
+        return "for "+boundVar+" in range("+lowerBound+", "+upperBound+", "+increment+"):\n    "+munch(body, tiles);
+    }
+    std::string loop_while(IRTree * current, const std::map<std::string, IRTree *> tiles){
+        IRTree * body = current->children.at(0)->children.at(0)->children.at(1);
+        IRTree * expr = current->children.at(0)->children.at(0)->children.at(0)->children.at(0)->children.at(1)->children.at(0);
+        return "while("+munch(expr, tiles)+"):\n    "+munch(body, tiles);
+    }
+
+    /*
+        Control
+    */
+    std::string if_then(IRTree * current, const std::map<std::string, IRTree *> tiles){
+        
+    }
+    std::string if_else(IRTree * current, const std::map<std::string, IRTree *> tiles){
+        IRTree * ifBody = current->children.at(0)->children.at(1);
+        IRTree * elseBody = current->children.at(0)->children.at(0)->children.at(0)->children.at(0)->children.at(1);
+        IRTree * expr = current->children.at(0)->children.at(0)->children.at(0)->children.at(0)->children.at(0)->children.at(0)->children.at(0); 
+        return "if ("+munch(expr, tiles)+"):\n   "+munch(ifBody, tiles)+"\nelse:\n    "+munch(elseBody, tiles);
+    }
     /*
         IR Calls
     */
@@ -43,10 +86,10 @@ namespace elijahrou{
     /*
         IR Loads
     */
-    std::string load_right(IRTree * current, std::map<std::string, IRTree *> tiles){
+    std::string load_right(IRTree * current, const std::map<std::string, IRTree *> tiles){
         return current->children.at(0)->children.at(1)->children.at(0)->node;
     }
-    std::string load_left(IRTree * current, std::map<std::string, IRTree *> tiles){
+    std::string load_left(IRTree * current, const std::map<std::string, IRTree *> tiles){
         return current->children.at(0)->children.at(0)->children.at(0)->node;
     }
 
@@ -55,14 +98,30 @@ namespace elijahrou{
             In order from biggest to smallest
         */
         /*
+            SIZE = 26
+        */
+        // For loop
+        if(current->innerEqual(*tiles.find("loop_for")->second)){
+            return loop_for(current, tiles);
+        }
+        /*
+            SIZE = 11
+        */
+        else if(current->innerEqual(*tiles.find("loop_while")->second)){
+            return loop_while(current, tiles);
+        }
+        else if(current->innerEqual(*tiles.find("if_else")->second)){
+            return if_else(current, tiles);
+        }
+        /*
             SIZE = 7 
         */
         // Input call with a right store
-        if(current->innerEqual(*tiles.find("call_store_input_right")->second)){
+        else if(current->innerEqual(*tiles.find("call_store_input_right")->second)){
             return call_store_input_right(current);
         }
         // Input call with a left store
-        if(current->innerEqual(*tiles.find("call_store_input_left")->second)){
+        else if(current->innerEqual(*tiles.find("call_store_input_left")->second)){
             return call_store_input_left(current);
         }
 
@@ -121,8 +180,25 @@ namespace elijahrou{
         else if(current->node == "*"){
             return munch(current->children.at(0), tiles) + "*" + munch(current->children.at(1), tiles);
         }
-
-        // Return the node if nothing else
+        else if(current->node == "=="){
+            return munch(current->children.at(0), tiles) + "==" + munch(current->children.at(1), tiles);
+        }
+        else if(current->node == ">"){
+            return munch(current->children.at(0), tiles) + ">" + munch(current->children.at(1), tiles);
+        }
+        else if(current->node == "<"){
+            return munch(current->children.at(0), tiles) + "<" + munch(current->children.at(1), tiles);
+        }
+        else if(current->node == "!="){
+            return munch(current->children.at(0), tiles) + "!=" + munch(current->children.at(1), tiles);
+        }
+        else if(current->node == "<="){
+            return munch(current->children.at(0), tiles) + "<=" + munch(current->children.at(1), tiles);
+        }
+        else if(current->node == ">="){
+            return munch(current->children.at(0), tiles) + ">=" + munch(current->children.at(1), tiles);
+        }
+        // Return the node if nothing else - assumed CONST->node
         return current->children.at(0)->node;
     }
 
