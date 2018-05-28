@@ -103,18 +103,21 @@ int main(int argc, char ** argv ){
         /*
             LOADS
         */
-        tiles.insert(std::pair<std::string, IRTree *>("store_e", readIR("tiles/store_e.ir")));
-        tiles.insert(std::pair<std::string, IRTree *>("store_e", readIR("tiles/store_e.ir")));
+        tiles.insert(std::pair<std::string, IRTree *>("load_right", readIR("tiles/load_right.ir")));
+        tiles.insert(std::pair<std::string, IRTree *>("load_left", readIR("tiles/load_left.ir")));
 
         /*
             Fetch input IR
         */
         std::string inputFile(argv[1]);
         IRTree * irt = readIR(inputFile);
-        
+        irt->output();
+        std::cout << std::endl;
+        // 
         //IRTree * test = readIR("testdata/input&print.ir");
         //test->output();
         //std::string pyCode = munch(test, tiles);
+        //std::cout << pyCode << std::endl;
 
         std::cout << munch(irt, tiles) << std::endl;
         /*

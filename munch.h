@@ -44,10 +44,10 @@ namespace elijahrou{
         IR Loads
     */
     std::string load_right(IRTree * current, std::map<std::string, IRTree *> tiles){
-        return current->children.at(0)->children.at(1)->node;
+        return current->children.at(0)->children.at(1)->children.at(0)->node;
     }
     std::string load_left(IRTree * current, std::map<std::string, IRTree *> tiles){
-        return current->children.at(0)->children.at(0)->node;
+        return current->children.at(0)->children.at(0)->children.at(0)->node;
     }
 
     std::string munch(IRTree * current, const std::map<std::string, IRTree *> tiles){
@@ -59,12 +59,10 @@ namespace elijahrou{
         */
         // Input call with a right store
         if(current->innerEqual(*tiles.find("call_store_input_right")->second)){
-            //std::cout << "call_input_long" << std::endl;
             return call_store_input_right(current);
         }
         // Input call with a left store
         if(current->innerEqual(*tiles.find("call_store_input_left")->second)){
-            //std::cout << "call_input_long" << std::endl;
             return call_store_input_left(current);
         }
 
@@ -72,11 +70,11 @@ namespace elijahrou{
             SIZE = 4
         */
         // Store a variable that's on the right subtree
-        else if(*current == *tiles.find("store_right")->second){
+        else if(current->innerEqual(*tiles.find("store_right")->second)){
             return store_right(current, tiles);
         }
         // Store a variable that's on the left subtree
-        else if(*current == *tiles.find("store_left")->second){
+        else if(current->innerEqual(*tiles.find("store_left")->second)){
             return store_left(current, tiles);
         }
 
@@ -84,24 +82,23 @@ namespace elijahrou{
             SIZE = 3
         */
         // Load a variable that's on the right subtree
-        else if(*current == *tiles.find("load_right")->second){
+        else if(current->innerEqual(*tiles.find("load_right")->second)){
             return load_right(current, tiles);
         }
         // Load a varaible that's on the left subtree
-        else if(*current == *tiles.find("load_left")->second){
+        else if(current->innerEqual(*tiles.find("load_left")->second)){
             return load_left(current, tiles);
         }
 
         /*
             SIZE = 2
         */
-        // Short input call - do this 1st otherwise inner equal will fail
+        // Short input call - This first or inner equal will fail
         else if(*current == *tiles.find("call_input")->second){
             return call_input(current);
         } 
         // Print call
         else if(current->innerEqual(*tiles.find("call_print")->second)){
-            //std::cout << "call_print" << std::endl;
             return call_print(current, tiles);
         }
         
