@@ -19,6 +19,7 @@ clean:
 	-rm obj/*.o	
 	-rm $(OUT)
 
-test:
-	$(CC) $(TEST_FILES) -o test --std=c++11
-	./test
+test: $(OBJ_FILES)
+	$(CC) $(TEST_FILES) -Isrc/ -o test.out --std=c++11
+	./test.out
+	@rm test.out
