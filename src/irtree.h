@@ -132,7 +132,6 @@ namespace elijahrou{
         void output(void);
 
     };
-    
 }
 
 #endif
