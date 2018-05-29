@@ -46,10 +46,19 @@ int main(int argc, char ** argv ){
             prompt = "";
             std::cout << std::endl;
             */
+
+            /////
+            // TEST
+            /////
             
+            //std::cout << irt->innerEqual(*tiles->find("if_then")->second) << std::endl;
+            
+            /////
+            // TEST
+            /////
+
             // Cross compile
             std::string pyCode = munch(irt, tiles, 0);
-
             std::cout << "Produced:\n" + pyCode + "\n" << std::endl;
 
             // Save as py file
@@ -66,6 +75,7 @@ int main(int argc, char ** argv ){
             prompt = "";
             std::cout << std::endl;
 
+            // Run
             std::cout << "Would you like to run the Python3 code? [(y)es/(n)o, default n]" << std::endl;
             std::cin >> prompt;
             std::cout << std::endl;
@@ -73,20 +83,6 @@ int main(int argc, char ** argv ){
                 std::cout << "Running " << filename << std::endl;
                 run(filename);
             }
-            
-
-            /////
-            // TEST
-            /////
-            /*
-            IRTree * test = readIR("tiles/if_else.ir");
-            test->output();
-            irt->output();
-            std::cout << irt->innerEqual(*test) << std::endl;
-            */
-            /////
-            // TEST
-            /////
 
             /*
                 Clean-Up
@@ -102,7 +98,7 @@ int main(int argc, char ** argv ){
             delete tiles;
         }
         catch(std::exception & e){
-            std::cout << "IR-Python3 CC: Missing Libraries." << std::endl;
+            std::cout << "IR-Python3 CC:"<< e.what() << std::endl;
         }
     }
     else{

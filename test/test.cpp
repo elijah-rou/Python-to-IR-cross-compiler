@@ -44,10 +44,44 @@ TEST_CASE("Hussein's Tests"){
     }
 }
 TEST_CASE("Loads"){
-
+    SECTION("Simple Load"){
+        IRTree * test = readIR("test/loads/load_s.ir");
+        string result = "x";
+        REQUIRE(munch(test, tiles, 0) == result);
+        delete test;
+    }
+    SECTION("Load left"){
+        IRTree * test = readIR("test/loads/load_l.ir");
+        string result = "x";
+        REQUIRE(munch(test, tiles, 0) == result);
+        delete test;
+    }
+    SECTION("Load right"){
+        IRTree * test = readIR("test/loads/load_r.ir");
+        string result = "x";
+        REQUIRE(munch(test, tiles, 0) == result);
+        delete test;
+    }
 }
 TEST_CASE("Stores"){
-
+    SECTION("Simple store"){
+        IRTree * test = readIR("test/stores/store_s.ir");
+        string result = "x = 1+2";
+        REQUIRE(munch(test, tiles, 0) == result);
+        delete test;
+    }
+    SECTION("Store left"){
+        IRTree * test = readIR("test/stores/store_l.ir");
+        string result = "z = 1>3";
+        REQUIRE(munch(test, tiles, 0) == result);
+        delete test;
+    }
+    SECTION("Store right"){
+        IRTree * test = readIR("test/stores/store_r.ir");
+        string result = "y = 1-1";
+        REQUIRE(munch(test, tiles, 0) == result);
+        delete test;
+    }
 }
 TEST_CASE("Calls"){
     SECTION("Input & Print"){
@@ -70,11 +104,38 @@ TEST_CASE("Calls"){
     }
 }
 TEST_CASE("Control"){
-
+    SECTION("If simple"){
+        IRTree * test = readIR("test/control/ifsimple.ir");
+        string result = "if(x):\n    print(x)";
+        REQUIRE(munch(test, tiles, 0) == result);
+    }
+    
+    SECTION("If else"){
+        IRTree * test = readIR("test/control/ifElsePrint.ir");
+        string result = readFile("test/control/ifElsePrint.py"); 
+        REQUIRE(munch(test, tiles, 0) == result);
+        delete test;
+    }
 }
 TEST_CASE("Loops"){
-
+    SECTION("While"){
+        IRTree * test = readIR("test/loops/while.ir");
+        string result = readFile("test/loops/while.py"); 
+        REQUIRE(munch(test, tiles, 0) == result);
+        delete test;
+    }
+    SECTION("For"){
+        IRTree * test = readIR("test/loops/for.ir");
+        string result = readFile("test/loops/for.py"); 
+        REQUIRE(munch(test, tiles, 0) == result);
+        delete test;
+    }
 }
 TEST_CASE("Composites"){
-
+    SECTION("If Print"){
+        IRTree * test = readIR("test/composites/ifPrint.ir");
+        string result = readFile("test/composites/ifPrint.py"); 
+        REQUIRE(munch(test, tiles, 0) == result);
+        delete test;
+    }
 }
