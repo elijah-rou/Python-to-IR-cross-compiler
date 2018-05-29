@@ -87,7 +87,7 @@ int main(int argc, char ** argv ){
             /*
                 IF
             */
-            //tiles.insert(std::pair<std::string, IRTree *>("if_then", readIR("tiles/if_then.ir")));
+            tiles.insert(std::pair<std::string, IRTree *>("if_then", readIR("tiles/if_then.ir")));
             tiles.insert(std::pair<std::string, IRTree *>("if_else", readIR("tiles/if_else.ir")));
             /*
                 CALLS

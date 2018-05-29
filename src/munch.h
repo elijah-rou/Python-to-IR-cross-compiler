@@ -39,7 +39,9 @@ namespace elijahrou{
         Control
     */
     std::string if_then(IRTree * current, const std::map<std::string, IRTree *> tiles){
-        
+        IRTree * body = current->children.at(0)->children.at(1);
+        IRTree * expr = current->children.at(0)->children.at(0)->children.at(0)->children.at(0)->children.at(0);
+        return "if("+munch(expr, tiles)+"):\n    "+munch(body, tiles);
     }
     std::string if_else(IRTree * current, const std::map<std::string, IRTree *> tiles){
         IRTree * ifBody = current->children.at(0)->children.at(1);
@@ -112,6 +114,12 @@ namespace elijahrou{
         }
         else if(current->innerEqual(*tiles.find("if_else")->second)){
             return if_else(current, tiles);
+        }
+        /*
+            SIZE = 8
+        */
+        else if(current->innerEqual(*tiles.find("if_then")->second)){
+            return if_then(current, tiles);
         }
         /*
             SIZE = 7 
