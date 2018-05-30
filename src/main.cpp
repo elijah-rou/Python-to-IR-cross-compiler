@@ -17,12 +17,12 @@ int main(int argc, char ** argv ){
         try{
             // Create trees for pattern recognition
             std::vector<IRTree *> * patternTrees = genPatterns(); 
-            std::cout << "DONE." << std::endl;
+            std::cout << "FIN." << std::endl;
 
             // Create tiles for python compilation
             std::cout << "Creating tiles..." << std::endl;
             std::map<std::string, IRTree *> * tiles = genTiles();
-            std::cout << "DONE>" << std::endl;
+            std::cout << "FIN." << std::endl;
 
             /*
                 Fetch input IR
@@ -30,7 +30,7 @@ int main(int argc, char ** argv ){
             std::cout << "Reading IR file into tree..." << std::endl;
             std::string inputFile(argv[1]);
             IRTree * irt = readIR(inputFile);
-            std::cout << "DONE" << std::endl << std::endl;
+            std::cout << "FIN." << std::endl << std::endl;
             std::string prompt;
 
             /*

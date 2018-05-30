@@ -138,4 +138,21 @@ TEST_CASE("Composites"){
         REQUIRE(munch(test, tiles, 0) == result);
         delete test;
     }
+    SECTION("Big if-else"){
+        IRTree * test = readIR("test/composites/big_if_else.ir");
+        string result = readFile("test/composites/big_if_else.py"); 
+        REQUIRE(munch(test, tiles, 0) == result);
+        delete test;
+    }
+    SECTION("Big while"){
+        IRTree * test = readIR("test/composites/bigwhile.ir");
+        string result = readFile("test/composites/bigwhile.py"); 
+        REQUIRE(munch(test, tiles, 0) == result);
+        delete test;
+    }SECTION("Insane"){
+        IRTree * test = readIR("test/composites/insane.ir");
+        string result = readFile("test/composites/insane.py"); 
+        REQUIRE(munch(test, tiles, 0) == result);
+        delete test;
+    }
 }
