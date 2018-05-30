@@ -32,7 +32,7 @@ int main(int argc, char ** argv ){
 
             // Cross compile
             std::string pyCode = munch(irt, tiles, 0);
-            std::cout << "Produced:\n" + pyCode + "\n" << std::endl;
+            std::cout << "Produced:\n\n" + pyCode + "\n" << std::endl;
 
             // Save as py file
             std::cout << "Enter a file name. [without the extenstion]" << std::endl;
@@ -61,10 +61,6 @@ int main(int argc, char ** argv ){
                 Clean-Up
             */
             delete irt;
-            for(elijahrou::IRTree * tree : *patternTrees){
-                delete tree;
-            }
-            delete patternTrees;
             for(auto & tree : *tiles){
                 delete tree.second;
             }
