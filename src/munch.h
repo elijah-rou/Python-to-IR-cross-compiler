@@ -37,8 +37,8 @@ namespace elijahrou{
     */
     std::string if_then(IRTree * current, std::map<std::string, IRTree *> * tiles, int level){
         IRTree * body = current->children.at(0)->children.at(1);
-        IRTree * expr = current->children.at(0)->children.at(0)->children.at(0)->children.at(0)->children.at(0);
-        return "if("+munch(expr, tiles, 0)+"):\n"+std::string(level+4, ' ')+munch(body, tiles, level+1);
+        IRTree * expr = current->children.at(0)->children.at(0)->children.at(0)->children.at(0);
+        return "if("+munch(expr, tiles, 0)+"):\n"+std::string(level+4, ' ')+munch(body, tiles, level+4);
     }
     std::string if_else(IRTree * current, std::map<std::string, IRTree *> * tiles, int level){
         IRTree * ifBody = current->children.at(0)->children.at(1);
@@ -73,6 +73,7 @@ namespace elijahrou{
         IR Stores
     */
     std::string store_right(IRTree * current, std::map<std::string, IRTree *> * tiles, int level){
+        std::cout << "Store right" << std::endl;
         std::string variable = current->children.at(0)->children.at(0)->children.at(1)->children.at(0)->node;
         return variable + " = " + munch(current->children.at(1), tiles, level);
     }
@@ -122,13 +123,7 @@ namespace elijahrou{
         else if(current->innerEqual(*tiles->find("if_else")->second)){
             return if_else(current, tiles, level);
         }
-        /*
-            SIZE = 8
-        */
-        // If then statement
-        else if(current->innerEqual(*tiles->find("if_then")->second)){
-            return if_then(current, tiles, level);
-        }
+        
         /*
             SIZE = 7 
         */
@@ -139,6 +134,14 @@ namespace elijahrou{
         // Input call with a left store
         else if(current->innerEqual(*tiles->find("call_store_input_left")->second)){
             return call_store_input_left(current);
+        }
+
+        /*
+            SIZE = 6
+        */
+        // If then statement
+        else if(current->innerEqual(*tiles->find("if_then")->second)){
+            return if_then(current, tiles, level);
         }
 
         /*
