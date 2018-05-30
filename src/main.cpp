@@ -15,10 +15,6 @@ int main(int argc, char ** argv ){
     if (argc != 1){
         std::cout << "Welcome to the IR-Python3 cross-compiler!" << std::endl << std::endl;
         try{
-            // Create trees for pattern recognition
-            std::vector<IRTree *> * patternTrees = genPatterns(); 
-            std::cout << "FIN." << std::endl;
-
             // Create tiles for python compilation
             std::cout << "Creating tiles..." << std::endl;
             std::map<std::string, IRTree *> * tiles = genTiles();
@@ -33,29 +29,6 @@ int main(int argc, char ** argv ){
             std::cout << "FIN." << std::endl << std::endl;
             std::string prompt;
 
-            /*
-                Optmise?
-            */
-            /*
-            std::cout << "Would you like to optimise the IR? [(y)es/(n)o, default n]" << std::endl;
-            std::cin >> prompt;
-            if(prompt[0] == 'y'){
-                irt->optimise(*patternTrees);
-                irt->output();
-            }
-            prompt = "";
-            std::cout << std::endl;
-            */
-
-            /////
-            // TEST
-            /////
-            
-            //std::cout << irt->innerEqual(*tiles->find("if_then")->second) << std::endl;
-            
-            /////
-            // TEST
-            /////
 
             // Cross compile
             std::string pyCode = munch(irt, tiles, 0);
